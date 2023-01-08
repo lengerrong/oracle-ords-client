@@ -14,11 +14,12 @@ module.exports = {
     },
     output: {
         path: __dirname + '/dist/',
-        filename: 'oracl-ords-client.js',
-        sourceMapFilename: 'oracl-ords-client.map',
+        filename: 'index.js',
+        sourceMapFilename: 'index.js.map',
         library: 'oracle-ords-client',
         libraryTarget: 'umd',
-        globalObject: 'this'
+        globalObject: 'this',
+        clean: true
     },
     node: false,
     devtool: 'source-map'
