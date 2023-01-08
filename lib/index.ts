@@ -1,6 +1,6 @@
-import axios from "axios"
+import axios from 'axios'
 
-const SODA_LATEST = "soda/latest"
+const SODA_LATEST = 'soda/latest'
 
 export type JSONValue =
     | string
@@ -49,7 +49,7 @@ class OracleORDSClient implements ORDSOAuthClient {
     private expires_at: Date
     constructor(config: ORDSOAuthClientConfig) {
         this.config = config
-        this.access_token = ""
+        this.access_token = ''
         this.expires_at = new Date()
     }
 
@@ -83,7 +83,7 @@ class OracleORDSClient implements ORDSOAuthClient {
             }
             await axios({
                 url,
-                method: "delete",
+                method: 'delete',
                 headers
             })
             return true
@@ -103,7 +103,7 @@ class OracleORDSClient implements ORDSOAuthClient {
         }
         const { data } = await axios({
             url,
-            method: "post",
+            method: 'post',
             headers,
             params: query,
             data: payload
@@ -114,13 +114,13 @@ class OracleORDSClient implements ORDSOAuthClient {
     private buildUrl(...parts: string[]) {
         return parts.reduce((url, part) => {
             // remove leading / from part
-            let newPart = part.startsWith("/") ? part.substring(1) : part
-            if (url.endsWith("/")) {
+            let newPart = part.startsWith('/') ? part.substring(1) : part
+            if (!url || url.endsWith('/')) {
                 return url + newPart
             } else {
-                return url + "/" + newPart
+                return url + '/' + newPart
             }
-        }, "")
+        }, '')
     }
 
     private async ensureOauthToken() {
@@ -128,7 +128,7 @@ class OracleORDSClient implements ORDSOAuthClient {
             // oauth token expired or not obtained yet
             // obtain a new token
             const { schema, ords_url, client_id, client_secret } = this.config
-            const url = this.buildUrl(ords_url, schema, "oauth/token")
+            const url = this.buildUrl(ords_url, schema, 'oauth/token')
             const auth_token = Buffer.from(
                 `${client_id}:${client_secret}`,
                 'utf-8'
@@ -140,7 +140,7 @@ class OracleORDSClient implements ORDSOAuthClient {
                 'Authorization': `Basic ${auth_token}`
             }
             return axios({
-                method: "post",
+                method: 'post',
                 url,
                 headers,
                 data: body

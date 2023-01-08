@@ -4,6 +4,7 @@
   "description": "a JavaScript library that defines a simple and consistent abstraction for interacting with a Oracle Cloud Autonomous Databases via Oracle ORDS Database Management REST API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "type": "module",
   "files": [
     "dist"
   ],
@@ -30,12 +31,12 @@
     "axios": "^1.2.2"
   },
   "devDependencies": {
-    "ts-loader": "^9.4.2",
-    "typescript": "^4.9.4",
-    "webpack": "^5.75.0"
+    "@rollup/plugin-typescript": "^11.0.0",
+    "rollup": "^3.9.1",
+    "tslib": "^2.4.1",
+    "typescript": "^4.9.4"
   },
   "scripts": {
-    "dev" : "webpack --mode development",
-    "build" : "webpack --mode production"
+    "build": "rm -rf dist && rollup -c"
   }
 }
