@@ -1,6 +1,6 @@
 {
   "name": "oracle-ords-client",
-  "version": "1.0.0",
+  "version": "2.2.2",
   "description": "a JavaScript library that defines a simple and consistent abstraction for interacting with a Oracle Cloud Autonomous Databases via Oracle ORDS Database Management REST API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
