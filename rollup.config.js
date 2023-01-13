@@ -8,5 +8,5 @@ export default {
     sourcemap: true
   },
   plugins: [typescript()],
-  external: ['axios']
+  external: ['axios', 'buffer']
 };

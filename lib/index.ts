@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Buffer } from 'buffer'
 
 const SODA_LATEST = 'soda/latest'
 
@@ -124,8 +125,8 @@ class OracleORDSClient implements ORDSOAuthClient {
     }
 
     private async ensureOauthToken() {
-        if (!this.access_token || this.expires_at.getTime() > new Date().getTime()) {
-            // oauth token expired or not obtained yet
+        if (!this.access_token || (this.expires_at.getTime() - new Date().getTime()) < 60000) {
+            // oauth token expired soon or not obtained yet
             // obtain a new token
             const { schema, ords_url, client_id, client_secret } = this.config
             const url = this.buildUrl(ords_url, schema, 'oauth/token')
@@ -139,16 +140,15 @@ class OracleORDSClient implements ORDSOAuthClient {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Authorization': `Basic ${auth_token}`
             }
-            return axios({
+            const { data } = await axios({
                 method: 'post',
                 url,
                 headers,
                 data: body
-            }).then(({ data }) => {
-                const { access_token, expires_in } = data
-                this.access_token = access_token
-                this.expires_at = new Date((new Date().getTime() + expires_in * 1000))
-            })
+            });
+            const { access_token, expires_in } = data
+            this.access_token = access_token
+            this.expires_at = new Date(new Date().getTime() + expires_in * 1000)
         }
     }
 }
